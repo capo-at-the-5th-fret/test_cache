@@ -57,7 +57,7 @@ jobs:
         if: runner.os != 'Windows'
         uses: aminya/setup-cpp@v1
         with:
-          #compiler: {{ matrix.compiler }}
+          compiler: ${{ matrix.compiler }}
           ninja: true
           vcpkg: true
 
@@ -65,7 +65,7 @@ jobs:
         if: runner.os == 'Windows'
         uses: aminya/setup-cpp@v1
         with:
-          #compiler: {{ matrix.compiler }}
+          compiler: ${{ matrix.compiler }}
           ninja: true
 
       - name: Install vcpkg Dependencies (non-Windows)
