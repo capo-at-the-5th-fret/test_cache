@@ -81,7 +81,7 @@ jobs:
         run: C:\vcpkg\vcpkg install fmt catch2 --vcpkg-root=C:\vcpkg
 
       - name: Install vcpkg Dependencies (Windows gcc)
-        if: runner.os == 'Windows' && matrix.compiler != 'gcc'
+        if: runner.os == 'Windows' && matrix.compiler == 'gcc'
         run: C:\vcpkg\vcpkg install fmt catch2 --vcpkg-root=C:\vcpkg --triplet=x64-mingw-dynamic
 
       - name: Configure CMake (non-Windows)
