@@ -16,3 +16,10 @@ TEST_CASE("subtract", "[math]")
 
     REQUIRE(subtract(1, 1) == 0);
 }
+
+TEST_CASE("multiply", "[math]")
+{
+    using namespace mylib;
+
+    REQUIRE(multiply(1, 2) == 2);
+}
