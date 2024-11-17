@@ -9,3 +9,10 @@ TEST_CASE("add", "[math]")
 
     REQUIRE(add(1, 1) == 2);
 }
+
+TEST_CASE("subtract", "[math]")
+{
+    using namespace mylib;
+
+    REQUIRE(subtract(1, 1) == 0);
+}
