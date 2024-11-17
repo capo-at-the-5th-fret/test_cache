@@ -73,7 +73,7 @@ jobs:
           ninja: true
 
       - name: Install vcpkg Dependencies
-        run: vcpkg install fmt catch2
+        run: C:\vcpkg\vcpkg install fmt catch2 --vcpkg-root=C:\vcpkg
 
       - name: Configure CMake (non-Windows)
         if: runner.os != 'Windows'
