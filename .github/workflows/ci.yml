@@ -72,7 +72,10 @@ jobs:
           compiler: ${{ matrix.compiler }}
           ninja: true
 
-      - name: Install vcpkg Dependencies
+      - name: Install vcpkg Dependencies (non-Windows)
+        run: vcpkg install fmt catch2
+
+      - name: Install vcpkg Dependencies (Windows)
         run: C:\vcpkg\vcpkg install fmt catch2 --vcpkg-root=C:\vcpkg
 
       - name: Configure CMake (non-Windows)
