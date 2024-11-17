@@ -55,7 +55,6 @@ jobs:
         uses: aminya/setup-cpp@v1
         with:
           compiler: ${{ matrix.compiler }}
-          vcvarsall: ${{ contains(matrix.os, 'windows') }}
           ninja: true
           vcpkg: true
 
@@ -64,11 +63,10 @@ jobs:
         uses: aminya/setup-cpp@v1
         with:
           compiler: ${{ matrix.compiler }}
-          vcvarsall: ${{ contains(matrix.os, 'windows') }}
           ninja: true
 
       - name: Install vcpkg Dependencies
-        run: vcpkg install catch2
+        run: vcpkg install fmt catch2
 
       - name: Configure CMake (non-Windows)
         if: runner.os != 'Windows'
