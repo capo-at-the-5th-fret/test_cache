@@ -25,10 +25,10 @@ jobs:
         include:
           - os: "windows-2022"
             compiler: "msvc"
-        # exclude:
+        exclude:
           # NOTE: Not compiling for some reason; try 15 when available
-          # - os: "macos-14"
-          #   compiler: "llvm"
+          - os: "macos-14"
+            compiler: "llvm"
     steps:
       - uses: actions/checkout@v3
 
