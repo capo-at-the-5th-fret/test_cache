@@ -31,8 +31,8 @@ jobs:
             compiler: "llvm"
           # NOTE: need a custom vcpkg that's built using gcc? Since gcc is
           #       on both linux and mac, just skip windows
-          - os: "windows-2022"
-            compiler: "gcc"
+          # - os: "windows-2022"
+          #   compiler: "gcc"
     steps:
       - uses: actions/checkout@v3
 
@@ -78,7 +78,7 @@ jobs:
 
       - name: Install vcpkg Dependencies (Windows)
         if: runner.os == 'Windows'
-        run: C:\vcpkg\vcpkg install fmt catch2 --vcpkg-root=C:\vcpkg
+        run: C:\vcpkg\vcpkg install fmt catch2 --vcpkg-root=C:\vcpkg --debug
 
       - name: Configure CMake (non-Windows)
         if: runner.os != 'Windows'
