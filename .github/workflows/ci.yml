@@ -76,9 +76,13 @@ jobs:
         if: runner.os != 'Windows'
         run: vcpkg install fmt catch2
 
-      - name: Install vcpkg Dependencies (Windows)
-        if: runner.os == 'Windows'
-        run: C:\vcpkg\vcpkg install fmt catch2 --vcpkg-root=C:\vcpkg --debug
+      - name: Install vcpkg Dependencies (Windows non-gcc)
+        if: runner.os == 'Windows' && matrix.compiler != 'gcc'
+        run: C:\vcpkg\vcpkg install fmt catch2 --vcpkg-root=C:\vcpkg
+
+      - name: Install vcpkg Dependencies (Windows gcc)
+        if: runner.os == 'Windows' && matrix.compiler != 'gcc'
+        run: C:\vcpkg\vcpkg install fmt catch2 --vcpkg-root=C:\vcpkg --triplet=x64-mingw-dynamic
 
       - name: Configure CMake (non-Windows)
         if: runner.os != 'Windows'
