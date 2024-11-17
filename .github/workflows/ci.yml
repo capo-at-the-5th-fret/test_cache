@@ -26,18 +26,23 @@ jobs:
           - os: "windows-2022"
             compiler: "msvc"
         exclude:
+          # NOTE: Not compiling for some reason; try 15 when available
           - os: "macos-14"
             compiler: "llvm"
+          # NOTE: need a custom vcpkg that's built using gcc? Since gcc is
+          #       on both linux and mac, just skip windows
           - os: "windows-2022"
             compiler: "gcc"
     steps:
       - uses: actions/checkout@v3
+
       - name: Cache
         uses: actions/cache@v3
         with:
           path: |
             ./build/
             ~/vcpkg
+            C:\vcpkg\installed
             ~/.cache/vcpkg/archives
             ${{ env.LOCALAPPDATA }}/vcpkg/archives
             ${{ env.APPDATA }}/vcpkg/archives
@@ -66,7 +71,6 @@ jobs:
         with:
           compiler: ${{ matrix.compiler }}
           ninja: true
-          vcpkg: true
 
       - name: Install vcpkg Dependencies
         run: vcpkg install fmt catch2
