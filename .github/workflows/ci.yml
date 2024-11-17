@@ -29,10 +29,6 @@ jobs:
           # NOTE: Not compiling for some reason; try 15 when available
           - os: "macos-14"
             compiler: "llvm"
-          # NOTE: need a custom vcpkg that's built using gcc? Since gcc is
-          #       on both linux and mac, just skip windows
-          # - os: "windows-2022"
-          #   compiler: "gcc"
     steps:
       - uses: actions/checkout@v3
 
@@ -69,7 +65,7 @@ jobs:
         if: runner.os == 'Windows'
         uses: aminya/setup-cpp@v1
         with:
-          compiler: ${{ matrix.compiler }}
+          compiler: {{ matrix.compiler }}
           ninja: true
 
       - name: Install vcpkg Dependencies (non-Windows)
