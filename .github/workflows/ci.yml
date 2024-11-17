@@ -28,6 +28,8 @@ jobs:
         exclude:
           - os: "macos-14"
             compiler: "llvm"
+          - os: "windows-2022"
+            compiler: "gcc"
     steps:
       - uses: actions/checkout@v3
       - name: Cache
@@ -78,7 +80,7 @@ jobs:
         # NOTE: {{env.VCPKG_INSTALLATION_ROOT}} does not seem to be working
       - name: Configure CMake (Windows)
         if: runner.os == 'Windows'
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_TOOLCHAIN_FILE="${{env.USERPROFILE}}\vcpkg\scripts\buildsystems\vcpkg.cmake"
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_TOOLCHAIN_FILE="${{USERPROFILE}}\vcpkg\scripts\buildsystems\vcpkg.cmake"
     
       - name: Build
         # Build your program with the given configuration
