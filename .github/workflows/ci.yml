@@ -50,16 +50,22 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ env.BUILD_TYPE }}-
 
-      - name: Setup Cpp
+      - name: Setup Cpp (non-Windows)
+        if: runner.os != 'Windows'
         uses: aminya/setup-cpp@v1
         with:
           compiler: ${{ matrix.compiler }}
           vcvarsall: ${{ contains(matrix.os, 'windows') }}
-          cmake: true
           ninja: true
           vcpkg: true
-          cppcheck: false
-          clang-tidy: false
+
+      - name: Setup Cpp (Windows)
+        if: runner.os == 'Windows'
+        uses: aminya/setup-cpp@v1
+        with:
+          compiler: ${{ matrix.compiler }}
+          vcvarsall: ${{ contains(matrix.os, 'windows') }}
+          ninja: true
 
       - name: Install vcpkg Dependencies
         run: vcpkg install catch2
