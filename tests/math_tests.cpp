@@ -34,3 +34,10 @@ TEST_CASE("divide", "[math]")
     REQUIRE(divide(4, 2) == 2);
     CHECK(divide(-1, 1) == -1);
 }
+
+TEST_CASE("square", "[math]")
+{
+    using namespace mylib;
+
+    CHECK(square(2) == 4);
+}

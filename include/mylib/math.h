@@ -21,4 +21,9 @@ namespace mylib
     {
         return a / b;
     }
+
+    inline int square(int a)
+    {
+        return multiply(a, a);
+    }
 }
