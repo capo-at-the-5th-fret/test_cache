@@ -47,11 +47,8 @@ jobs:
       - name: Install C++ Tools
         uses: aminya/setup-cpp@v1
         with:
+          vcvarsall: ${{ runner.os == 'Windows' }}
           ninja: true
-
-      - name: Enable Developer Command Prompt (Windows)
-        if: runner.os == 'Windows'
-        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure CMake (non-Windows)
         if: runner.os != 'Windows'
