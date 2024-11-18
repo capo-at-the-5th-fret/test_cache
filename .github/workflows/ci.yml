@@ -8,7 +8,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-        
+
 jobs:
   Test:
     name: ${{ matrix.config.os }} ${{ matrix.config.compiler }}
@@ -23,8 +23,8 @@ jobs:
           # NOTE: Won't compile; llvm not supported on arm?
           #- { os: "macos-14", compiler: "llvm", cmake_cxx: "/usr/lib/llvm-18/bin/clang++" }
           - { os: windows-2022, compiler: "msvc", cmake_cxx: "cl" }
-          #- { os: windows-2022, compiler: "llvm", cmake_cxx: "clang-cl" }
-          #- { os: windows-2022, compiler: "gcc", cmake_cxx: "g++" }
+          - { os: windows-2022, compiler: "llvm", cmake_cxx: "clang-cl" }
+          - { os: windows-2022, compiler: "gcc", cmake_cxx: "g++" }
 
     steps:
       - uses: actions/checkout@v4
@@ -55,9 +55,9 @@ jobs:
         run: cmake -G "Visual Studio 17 2022" -B ${{github.workspace}}/build -Ax64
 
         # NOTE: {{env.VCPKG_INSTALLATION_ROOT}} does not seem to be working
-      #- name: Configure CMake (Windows non-msvc)
-      #  if: runner.os == 'Windows' && matrix.config.compiler != 'msvc'
-      #  run: cmake -G "Ninja Multi-Config" -B ${{github.workspace}}/build -DCMAKE_CXX_COMPILER="${{matrix.config.cmake_cxx}}"
+      - name: Configure CMake (Windows non-msvc)
+        if: runner.os == 'Windows' && matrix.config.compiler != 'msvc'
+        run: cmake -G Ninja -B ${{github.workspace}}/build -DCMAKE_CXX_COMPILER="${{matrix.config.cmake_cxx}}" -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
     
       - name: Build
         # Build your program with the given configuration
