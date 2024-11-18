@@ -8,6 +8,7 @@ TEST_CASE("add", "[math]")
     using namespace mylib;
 
     REQUIRE(add(1, 1) == 2);
+    CHECK(add(-1, 0) == -1);
 }
 
 TEST_CASE("subtract", "[math]")
