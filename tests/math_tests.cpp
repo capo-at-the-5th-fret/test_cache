@@ -27,6 +27,7 @@ TEST_CASE("multiply", "[math]")
 
     REQUIRE(multiply(1, 2) == 2);
     CHECK(multiply(-1, 0) == 0);
+    CHECK(multiply(-1, 1) == -1);
 }
 
 TEST_CASE("divide", "[math]")
