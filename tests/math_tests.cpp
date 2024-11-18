@@ -32,4 +32,5 @@ TEST_CASE("divide", "[math]")
     using namespace mylib;
 
     REQUIRE(divide(4, 2) == 2);
+    CHECK(divide(-1, 1) == -1);
 }
