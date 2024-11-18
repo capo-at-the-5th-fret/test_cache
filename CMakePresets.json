@@ -1,0 +1,67 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+      "major": 3,
+      "minor": 28,
+      "patch": 0
+    },
+    "configurePresets": [
+      {
+        "name": "gcc-release",
+        "generator": "Ninja",
+        "binaryDir": "${sourceDir}/build/gcc-release",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Release",
+          "CMAKE_C_COMPILER": "gcc",
+          "CMAKE_CXX_COMPILER": "g++"
+        }
+      },
+      {
+        "name": "gcc-debug",
+        "generator": "Ninja",
+        "binaryDir": "${sourceDir}/build/gcc-debug",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Debug",
+          "CMAKE_C_COMPILER": "gcc",
+          "CMAKE_CXX_COMPILER": "g++"
+        }
+      },
+      {
+        "name": "clang-release",
+        "generator": "Ninja",
+        "binaryDir": "${sourceDir}/build/clang-release",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Release",
+          "CMAKE_C_COMPILER": "clang",
+          "CMAKE_CXX_COMPILER": "clang++"
+        }
+      },
+      {
+        "name": "clang-debug",
+        "generator": "Ninja",
+        "binaryDir": "${sourceDir}/build/clang-debug",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Debug",
+          "CMAKE_C_COMPILER": "clang",
+          "CMAKE_CXX_COMPILER": "clang++"
+        }
+      },
+      {
+        "name": "msvc-release",
+        "generator": "Visual Studio 17 2022",
+        "binaryDir": "${sourceDir}/build/msvc-release",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Release"
+        }
+      },
+      {
+        "name": "msvc-debug",
+        "generator": "Visual Studio 17 2022",
+        "binaryDir": "${sourceDir}/build/msvc-debug",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Debug"
+        }
+      }
+    ]
+  }
+  
