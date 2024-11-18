@@ -40,4 +40,5 @@ TEST_CASE("square", "[math]")
     using namespace mylib;
 
     CHECK(square(2) == 4);
+    CHECK(square(-1) == 1);
 }
