@@ -8,15 +8,15 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-
+        
 jobs:
   Test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: false
       matrix:
         config:
-          - { name: "Ubuntu gcc", os: ubuntu-24.04, compiler: "gcc-14" } #, cc: "gcc", cxx: "g++" }
+          - { name: "Ubuntu gcc", os: "ubuntu-24.04", compiler: "gcc-14" } #, cc: "gcc", cxx: "g++" }
           #- { name: "Windows MSVC", os: windows-latest, cc: "cl", cxx: "cl" }
           #- { name: "Windows clang", os: windows-latest, cc: "clang", cxx: "clang++" }
           #- { name: "Ubuntu gcc", os: ubuntu-latest, cc: "gcc", cxx: "g++" }
@@ -60,7 +60,7 @@ jobs:
             ~/Library/Caches/ccache
             ${{ env.LOCALAPPDATA }}/ccache
             ${{ env.XDG_CACHE_HOME }}/ccache
-          key: ${{ runner.os }}-${{ matrix.compiler }}-${{ env.BUILD_TYPE }}-${{ hashFiles('**/CMakeLists.txt', './vcpkg.json') }}
+          key: ${{ runner.os }}-${{ matrix.config.compiler }}-${{ env.BUILD_TYPE }}-${{ hashFiles('**/CMakeLists.txt', './vcpkg.json') }}
           restore-keys: |
             ${{ runner.os }}-${{ env.BUILD_TYPE }}-
 
@@ -68,7 +68,7 @@ jobs:
         if: runner.os != 'Windows'
         uses: aminya/setup-cpp@v1
         with:
-          #compiler: ${{ matrix.compiler }}
+          #compiler: ${{ matrix.config.compiler }}
           ninja: true
           vcpkg: true
 
@@ -76,7 +76,7 @@ jobs:
         if: runner.os == 'Windows'
         uses: aminya/setup-cpp@v1
         with:
-          #compiler: ${{ matrix.compiler }}
+          #compiler: ${{ matrix.config.compiler }}
           ninja: true
 
       - name: Install vcpkg Dependencies (non-Windows)
@@ -84,11 +84,11 @@ jobs:
         run: vcpkg install fmt catch2
 
       - name: Install vcpkg Dependencies (Windows non-gcc)
-        if: runner.os == 'Windows' && matrix.compiler != 'gcc'
+        if: runner.os == 'Windows' && matrix.config.compiler != 'gcc'
         run: C:\vcpkg\vcpkg install fmt catch2 --vcpkg-root=C:\vcpkg
 
       - name: Install vcpkg Dependencies (Windows gcc)
-        if: runner.os == 'Windows' && matrix.compiler == 'gcc'
+        if: runner.os == 'Windows' && matrix.config.compiler == 'gcc'
         run: C:\vcpkg\vcpkg install fmt catch2 --vcpkg-root=C:\vcpkg --triplet=x64-mingw-dynamic
 
       - name: Configure CMake (non-Windows)
