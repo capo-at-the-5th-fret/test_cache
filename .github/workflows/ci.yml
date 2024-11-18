@@ -58,7 +58,7 @@ jobs:
 
       - name: Configure CMake (Windows msvc)
         if: runner.os == 'Windows'
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_CXX_COMPILER="${{matrix.config.cmake_cxx}}"
+        run: cmake -B ${{github.workspace}}/build
 
         # NOTE: {{env.VCPKG_INSTALLATION_ROOT}} does not seem to be working
       - name: Configure CMake (Windows non-msvc)
