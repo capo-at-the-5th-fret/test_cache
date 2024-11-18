@@ -39,7 +39,8 @@ TEST_CASE("divide", "[math]")
 
     CHECK(divide(4, 2) == 2);
     CHECK(divide(-1, 1) == -1);
-    CHECK(divide(-1, 16) == 0);   
+    CHECK(divide(-1, 16) == 0);
+    CHECK(divide(1, -1) == -1);
 }
 
 TEST_CASE("square", "[math]")
