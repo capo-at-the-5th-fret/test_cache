@@ -23,7 +23,7 @@ jobs:
           # NOTE: Won't compile; llvm not supported on arm?
           #- { os: "macos-14", compiler: "llvm", cmake_cxx: "/usr/lib/llvm-18/bin/clang++" }
           #- { os: windows-2022, compiler: "msvc", cmake_cxx: "cl" }
-          - { os: windows-2022, compiler: "llvm", cmake_cxx: "clang++" }
+          - { os: windows-2022, compiler: "llvm", cmake_cxx: "clang-cl" }
           #- { os: windows-2022, compiler: "gcc", cmake_cxx: "g++" }
 
     steps:
