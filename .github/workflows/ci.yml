@@ -24,6 +24,7 @@ jobs:
           #- { os: "macos-14", compiler: "llvm", cmake_cxx: "/usr/lib/llvm-18/bin/clang++" }
           - { os: windows-2022, compiler: "msvc", cmake_cxx: "cl" }
           - { os: windows-2022, compiler: "llvm", cmake_cxx: "clang++" }
+          - { os: windows-2022, compiler: "gcc", cmake_cxx: "g++" }
 
     steps:
       - uses: actions/checkout@v4
