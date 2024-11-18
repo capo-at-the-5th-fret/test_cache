@@ -18,6 +18,7 @@ jobs:
       matrix:
         config:
           - { os: "ubuntu-24.04", compiler: "gcc", cmake_cxx: "/usr/bin/g++-14" }
+          - { os: "ubuntu-24.04", compiler: "llvm", cmake_cxx: "/usr/lib/llvm-18/bin/clang++" }
           #- { name: "Windows MSVC", os: windows-latest, cc: "cl", cxx: "cl" }
           #- { name: "Windows clang", os: windows-latest, cc: "clang", cxx: "clang++" }
           #- { name: "Ubuntu gcc", os: ubuntu-latest, cc: "gcc", cxx: "g++" }
