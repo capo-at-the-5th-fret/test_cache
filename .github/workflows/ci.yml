@@ -56,10 +56,14 @@ jobs:
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
         run: cmake -G Ninja -B ${{github.workspace}}/build -DCMAKE_CXX_COMPILER=${{matrix.config.cmake_cxx}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
-        # NOTE: {{env.VCPKG_INSTALLATION_ROOT}} does not seem to be working
-      - name: Configure CMake (Windows)
+      - name: Configure CMake (Windows msvc)
         if: runner.os == 'Windows'
         run: cmake -B ${{github.workspace}}/build -DCMAKE_CXX_COMPILER="${{matrix.config.cmake_cxx}}"
+
+        # NOTE: {{env.VCPKG_INSTALLATION_ROOT}} does not seem to be working
+      - name: Configure CMake (Windows non-msvc)
+        if: runner.os == 'Windows'
+        run: cmake -G Ninja -B ${{github.workspace}}/build -DCMAKE_CXX_COMPILER="${{matrix.config.cmake_cxx}}"
     
       - name: Build
         # Build your program with the given configuration
