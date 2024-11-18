@@ -57,12 +57,12 @@ jobs:
         run: cmake -G Ninja -B ${{github.workspace}}/build -DCMAKE_CXX_COMPILER=${{matrix.config.cmake_cxx}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
       - name: Configure CMake (Windows msvc)
-        if: runner.os == 'Windows'
+        if: runner.os == 'Windows' && matrix.config.compiler == 'msvc'
         run: cmake -B ${{github.workspace}}/build
 
         # NOTE: {{env.VCPKG_INSTALLATION_ROOT}} does not seem to be working
       - name: Configure CMake (Windows non-msvc)
-        if: runner.os == 'Windows'
+        if: runner.os == 'Windows' && matrix.config.compiler != 'msvc'
         run: cmake -G Ninja -B ${{github.workspace}}/build -DCMAKE_CXX_COMPILER="${{matrix.config.cmake_cxx}}"
     
       - name: Build
