@@ -59,7 +59,7 @@ jobs:
         # NOTE: {{env.VCPKG_INSTALLATION_ROOT}} does not seem to be working
       - name: Configure CMake (Windows)
         if: runner.os == 'Windows'
-        run: cmake -G Ninja -B ${{github.workspace}}/build -DCMAKE_CXX_COMPILER="${{matrix.config.cmake_cxx}}"
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_CXX_COMPILER="${{matrix.config.cmake_cxx}}"
     
       - name: Build
         # Build your program with the given configuration
