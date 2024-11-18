@@ -42,7 +42,7 @@ jobs:
         uses: aminya/setup-cpp@v1
         with:
           vcvarsall: ${{ runner.os == 'Windows' && matrix.config.compiler == 'msvc' }}
-          ninja: ${{ runner.os != 'Windows' }}
+          ninja: ${{ runner.os != 'Windows' || (runner.os == 'Windows' && matrix.config.compiler != 'msvc') }}
 
       - name: Configure CMake (non-Windows)
         if: runner.os != 'Windows'
