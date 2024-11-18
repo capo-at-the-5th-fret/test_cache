@@ -8,9 +8,6 @@ project(test_cache
 # https://stackoverflow.com/questions/48026483/setting-cmake-cxx-standard-to-various-values
 set(CMAKE_CXX_STANDARD 23 CACHE STRING "C++ standard to be used")
 
-message(STATUS "C++ compiler: ${CMAKE_CXX_COMPILER}")
-message(STATUS "C++ standard: ${CMAKE_CXX_STANDARD}")
-
 add_subdirectory(include)
 
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
