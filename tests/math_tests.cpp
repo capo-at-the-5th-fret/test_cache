@@ -50,4 +50,5 @@ TEST_CASE("square", "[math]")
     CHECK(square(2) == 4);
     CHECK(square(-1) == 1);
     CHECK(square(0) == 0);
+    CHECK(square(1) == 1);
 }
