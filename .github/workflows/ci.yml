@@ -57,7 +57,7 @@ jobs:
         # NOTE: {{env.VCPKG_INSTALLATION_ROOT}} does not seem to be working
       - name: Configure CMake (Windows non-msvc)
         if: runner.os == 'Windows' && matrix.config.compiler != 'msvc'
-        run: cmake -G Ninja -B ${{github.workspace}}/build -DCMAKE_CXX_COMPILER="${{matrix.config.cmake_cxx}}"
+        run: cmake -G "Ninja Multi-Config" -B ${{github.workspace}}/build -DCMAKE_CXX_COMPILER="${{matrix.config.cmake_cxx}}"
     
       - name: Build
         # Build your program with the given configuration
