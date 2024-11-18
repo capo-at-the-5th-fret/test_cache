@@ -24,6 +24,7 @@ TEST_CASE("multiply", "[math]")
     using namespace mylib;
 
     REQUIRE(multiply(1, 2) == 2);
+    CHECK(multiply(-1, 0) == 0);
 }
 
 TEST_CASE("divide", "[math]")
