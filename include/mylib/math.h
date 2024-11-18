@@ -16,4 +16,9 @@ namespace mylib
     {
         return a * b;
     }
+
+    inline int divide(int a, int b)
+    {
+        return a / b;
+    }
 }
