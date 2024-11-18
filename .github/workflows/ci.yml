@@ -15,20 +15,31 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - windows-2022
-          - ubuntu-24.04
-          - macos-14
-        compiler:
-          - llvm
-          - gcc
-        include:
-          - os: "windows-2022"
-            compiler: "msvc"
-        exclude:
-          # NOTE: Not compiling for some reason; try 15 when available
-          - os: "macos-14"
-            compiler: "llvm"
+        config:
+          - { name: "Ubuntu gcc", os: ubuntu-24.04, compiler: "gcc-14" } #, cc: "gcc", cxx: "g++" }
+          #- { name: "Windows MSVC", os: windows-latest, cc: "cl", cxx: "cl" }
+          #- { name: "Windows clang", os: windows-latest, cc: "clang", cxx: "clang++" }
+          #- { name: "Ubuntu gcc", os: ubuntu-latest, cc: "gcc", cxx: "g++" }
+          #- { name: "Ubuntu clang", os: ubuntu-latest, cc: "clang", cxx: "clang++" }
+          #- { name: "MacOS clang", os: macos-latest, cc: "clang", cxx: "clang++" }
+          #- { name: "MacOS gcc", os: macos-latest, cc: "gcc", cxx: "g++" }
+
+        # os:
+        #   - windows-2022
+        #   - ubuntu-24.04
+        #   - macos-14
+        # compiler:
+        #   - llvm
+        #   - gcc
+        # include:
+        #   - os: "windows-2022"
+        #     compiler: "msvc"
+        # exclude:
+        #   # NOTE: Not compiling for some reason (llvm doesn't work on arm?);
+        #   # try 15 when available
+        #   - os: "macos-14"
+        #     compiler: "llvm"
+
     steps:
       - uses: actions/checkout@v3
 
@@ -57,7 +68,7 @@ jobs:
         if: runner.os != 'Windows'
         uses: aminya/setup-cpp@v1
         with:
-          compiler: ${{ matrix.compiler }}
+          #compiler: ${{ matrix.compiler }}
           ninja: true
           vcpkg: true
 
@@ -65,7 +76,7 @@ jobs:
         if: runner.os == 'Windows'
         uses: aminya/setup-cpp@v1
         with:
-          compiler: ${{ matrix.compiler }}
+          #compiler: ${{ matrix.compiler }}
           ninja: true
 
       - name: Install vcpkg Dependencies (non-Windows)
