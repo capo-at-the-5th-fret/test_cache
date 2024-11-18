@@ -20,10 +20,10 @@ jobs:
           - { os: "ubuntu-24.04", compiler: "gcc", cmake_cxx: "/usr/bin/g++-14" }
           - { os: "ubuntu-24.04", compiler: "llvm", cmake_cxx: "/usr/lib/llvm-18/bin/clang++" }
           - { os: "macos-14", compiler: "gcc", cmake_cxx: "/opt/homebrew/bin/g++-14" }
+          # NOTE: Won't compile; llvm not supported on arm?
           #- { os: "macos-14", compiler: "llvm", cmake_cxx: "/usr/lib/llvm-18/bin/clang++" }
-
-          #- { os: windows-2022, compiler: "msvc", cmake_cxx: "cl" }
-          #- { os: windows-2022, compiler: "llvm", cmake_cxx: "clang++" }
+          - { os: windows-2022, compiler: "msvc", cmake_cxx: "cl" }
+          - { os: windows-2022, compiler: "llvm", cmake_cxx: "clang++" }
 
     steps:
       - uses: actions/checkout@v4
