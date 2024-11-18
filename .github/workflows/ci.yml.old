@@ -17,13 +17,42 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: "ubuntu-24.04", compiler: "gcc", cmake_cxx: "/usr/bin/g++-14" }
+          - { os: "ubuntu-24.04", compiler: "gcc" }
+          - { os: "ubuntu-24.04", compiler: "llvm" }
+          - { os: "macos-14", compiler: "gcc" }
+          - { os: "windows-2022", compiler: "msvc" }
+          - { os: "windows-2022", compiler: "gcc" }
+
+          #- { os: "ubuntu-24.04", compiler: "gcc", cmake_cxx: "/usr/bin/g++-14" }
           #- { os: "ubuntu-24.04", compiler: "llvm", cmake_cxx: "/usr/lib/llvm-18/bin/clang++" }
           #- { os: "macos-14", compiler: "gcc", cmake_cxx: "/opt/homebrew/bin/g++-14" }
           #- { os: "macos-14", compiler: "llvm", cmake_cxx: "/usr/lib/llvm-18/bin/clang++" }
 
           #- { os: windows-2022, compiler: "msvc", cmake_cxx: "cl" }
           #- { os: windows-2022, compiler: "llvm", cmake_cxx: "clang++" }
+
+          #- { name: "Windows MSVC", os: windows-latest, cc: "cl", cxx: "cl" }
+          #- { name: "Windows clang", os: windows-latest, cc: "clang", cxx: "clang++" }
+          #- { name: "Ubuntu gcc", os: ubuntu-latest, cc: "gcc", cxx: "g++" }
+          #- { name: "Ubuntu clang", os: ubuntu-latest, cc: "clang", cxx: "clang++" }
+          #- { name: "MacOS clang", os: macos-latest, cc: "clang", cxx: "clang++" }
+          #- { name: "MacOS gcc", os: macos-latest, cc: "gcc", cxx: "g++" }
+
+        # os:
+        #   - windows-2022
+        #   - ubuntu-24.04
+        #   - macos-14
+        # compiler:
+        #   - llvm
+        #   - gcc
+        # include:
+        #   - os: "windows-2022"
+        #     compiler: "msvc"
+        # exclude:
+        #   # NOTE: Not compiling for some reason (llvm doesn't work on arm?);
+        #   # try 15 when available
+        #   - os: "macos-14"
+        #     compiler: "llvm"
 
     steps:
       - uses: actions/checkout@v3
@@ -33,6 +62,12 @@ jobs:
         with:
           path: |
             ./build/
+            ~/vcpkg
+            C:\vcpkg\installed
+            ~/.cache/vcpkg/archives
+            ${{ env.LOCALAPPDATA }}/vcpkg/archives
+            ${{ env.APPDATA }}/vcpkg/archives
+            ${{ env.XDG_CACHE_HOME }}/vcpkg/archives
             ~/.cache/ccache
             ~/.ccache
             ~/.config/ccache
@@ -43,11 +78,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ env.BUILD_TYPE }}-
 
+      - name: Install Compiler
+        if: matrix.config.compiler != ''
+        uses: aminya/setup-cpp@v1
+        with:
+          compiler: ${{ matrix.config.compiler }}
+
       - name: Install C++ Tools (non-Windows)
         if: runner.os != 'Windows'
         uses: aminya/setup-cpp@v1
         with:
           ninja: true
+          vcpkg: true
 
       - name: Install C++ Tools (Windows)
         if: runner.os == 'Windows'
@@ -55,11 +97,23 @@ jobs:
         with:
           ninja: true
 
+      - name: Install vcpkg Dependencies (non-Windows)
+        if: runner.os != 'Windows'
+        run: vcpkg install fmt catch2
+
+      - name: Install vcpkg Dependencies (Windows non-gcc)
+        if: runner.os == 'Windows' && !startsWith(matrix.config.compiler, 'gcc')
+        run: C:\vcpkg\vcpkg install fmt catch2 --vcpkg-root=C:\vcpkg
+
+      - name: Install vcpkg Dependencies (Windows gcc)
+        if: runner.os == 'Windows' && startsWith(matrix.config.compiler, 'gcc')
+        run: C:\vcpkg\vcpkg install fmt catch2 --vcpkg-root=C:\vcpkg --triplet=x64-mingw-dynamic
+
       - name: Configure CMake (non-Windows)
         if: runner.os != 'Windows'
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-        run: cmake -G Ninja -B ${{github.workspace}}/build -DCMAKE_CXX_COMPILER=${{matrix.config.cmake_cxx}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE=~/vcpkg/scripts/buildsystems/vcpkg.cmake
+        run: cmake -G Ninja -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE=~/vcpkg/scripts/buildsystems/vcpkg.cmake
 
         # NOTE: {{env.VCPKG_INSTALLATION_ROOT}} does not seem to be working
       - name: Configure CMake (Windows)
