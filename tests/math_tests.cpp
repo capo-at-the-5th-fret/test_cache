@@ -23,3 +23,10 @@ TEST_CASE("multiply", "[math]")
 
     REQUIRE(multiply(1, 2) == 2);
 }
+
+TEST_CASE("divide", "[math]")
+{
+    using namespace mylib;
+
+    REQUIRE(divide(4, 2) == 2);
+}
