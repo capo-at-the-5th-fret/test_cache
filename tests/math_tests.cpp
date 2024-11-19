@@ -11,6 +11,7 @@ TEST_CASE("add", "[math]")
     CHECK(add(-1, 0) == -1);
     CHECK(add(-1, 1) == 0);
     CHECK(add(1, -1) == 0);
+    CHECK(add(0, 0) == 0);
 }
 
 TEST_CASE("subtract", "[math]")
